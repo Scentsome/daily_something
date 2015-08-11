@@ -17,7 +17,7 @@ public class MyActivity extends Activity {
     private TabHost mTabHost;
     private TabManager mTabManager;
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.tab);
         setTitle("Main");
