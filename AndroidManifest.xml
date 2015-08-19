@@ -22,5 +22,6 @@
                   android:parentActivityName="MyActivity"></activity>
         <activity android:name=".Password"
                   android:parentActivityName="MyActivity"></activity>
+        <receiver android:name=".AlarmBroadcastReceiver"></receiver>
     </application>
 </manifest>

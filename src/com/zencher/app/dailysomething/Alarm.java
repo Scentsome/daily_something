@@ -1,9 +1,8 @@
 package com.zencher.app.dailysomething;
-import android.app.Activity;
-import android.app.DialogFragment;
-import android.app.Fragment;
-import android.app.TimePickerDialog;
+import android.app.*;
 import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -13,7 +12,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 
 /**
  * Created by kevin on 2015/7/20.
@@ -25,6 +26,8 @@ public class Alarm extends Activity implements TimePickerDialog.OnTimeSetListene
     boolean sws,sws2,sws3,sws4,sws5;
     boolean a,a2,a3,a4,a5;
     int run;
+    int notificationId;
+    private PendingIntent alarmIntent;
     private void check(Switch swC, int hour, int min){
         if (min<10){
             swC.setText(hour+":"+"0"+min);
@@ -90,21 +93,38 @@ public class Alarm extends Activity implements TimePickerDialog.OnTimeSetListene
                 showTimePickerDialog(v);
             }
         });
-
+        Calendar setTimeCalendar = Calendar.getInstance();
     }
     public void showTimePickerDialog(View v) {
         DialogFragment newFragment = new InAlarm();
         newFragment.show(getFragmentManager(), "timePicker");
     }
     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-        if(run == 0){
+        if(run == 0) {
             if (sws == false){
-                check(sw,hourOfDay,minute);
+                check(sw, hourOfDay, minute);
                 bt2.setVisibility(view.VISIBLE);
                 sw.setVisibility(view.VISIBLE);
                 sw.toggle();
                 sws = true;
                 a = true;
+                Intent bootIntent = new Intent(Alarm.this, AlarmBroadcastReceiver.class);
+                bootIntent.putExtra("notificationId", notificationId);
+                alarmIntent = PendingIntent.getBroadcast(Alarm.this, 0, bootIntent, PendingIntent.FLAG_CANCEL_CURRENT);
+                AlarmManager alarm = (AlarmManager)getSystemService(Context.ALARM_SERVICE);
+
+                Calendar startTime = Calendar.getInstance();
+                startTime.set(Calendar.HOUR_OF_DAY, hourOfDay);
+                startTime.set(Calendar.MINUTE, minute);
+                startTime.set(Calendar.SECOND, 0);
+                long alarmStartTime = startTime.getTimeInMillis();
+                alarm.set(
+                        AlarmManager.RTC_WAKEUP,
+                        alarmStartTime,
+                        alarmIntent
+                );
+                Toast.makeText(Alarm.this, "Alarm set!", Toast.LENGTH_SHORT).show();
+                notificationId++;
             }
             else if (sws == true && sws2 == false){
                 check(sw2,hourOfDay,minute);
