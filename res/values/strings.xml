@@ -1,4 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">my_daily_something</string>
+
+
+    <!-- For contentDescription of Image-based layout -->
+    <string name="image_error">Image</string>
+    <string name="cansel">Cancel</string>
+    <string name="passcode_lock">Passcode Lock</string>
+    <string name="passcode_set">Set a Passcode</string>
+    <string name="passcode_defalt_text">Reinstall if you have forgotten your passcode</string>
+    <string name="passcode_input">Passcode input</string>
+    <string name="passcode_input_sub">Please enter the passcode</string>
+    <string name="zero">0</string>
+    <string name="one">1</string>
+    <string name="two">2</string>
+    <string name="three">3</string>
+    <string name="four">4</string>
+    <string name="five">5</string>
+    <string name="six">6</string>
+    <string name="seven">7</string>
+    <string name="eight">8</string>
+    <string name="nine">9</string>
+    <string name="period">.</string>
+    <string name="title_activity_sample1">Sample1Activity</string>
+    <string name="title_activity_sample2">Sample2Activity</string>
+
+    <!-- SampleActivity -->
+    <string name="sample1">Passcode Setting</string>
+    <string name="sample2">SampleActivity2</string>
+    <string name="sample11">SampleActivity11</string>
+    <string name="sample22">SampleActivity22</string>
+    <string name="title_activity_lock_observer_action_bar">LockObserverActionBarActivity</string>
 </resources>

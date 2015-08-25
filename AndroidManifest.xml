@@ -5,8 +5,10 @@
           android:versionName="1.0">
     <uses-permission android:name="android.permission.CAMERA"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-    <uses-sdk android:minSdkVersion="20"/>
-    <application android:label="@string/app_name" android:icon="@drawable/ic_launcher">
+    <uses-sdk android:minSdkVersion="19"/>
+    <application android:name=".LockObserverApplication"
+                 android:label="@string/app_name"
+                 android:icon="@drawable/ic_launcher">
         <activity android:name="MyActivity"
                   android:label="@string/app_name">
             <intent-filter>
@@ -23,5 +25,13 @@
         <activity android:name=".Password"
                   android:parentActivityName="MyActivity"></activity>
         <receiver android:name=".AlarmBroadcastReceiver"></receiver>
+        <activity
+                android:name=".ConfirmPassCodeActivity"
+                android:label="@string/app_name" >
+        </activity>
+        <activity
+                android:name=".InitPassCodeActivity"
+                android:label="@string/app_name" >
+        </activity>
     </application>
 </manifest>

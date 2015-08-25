@@ -31,19 +31,26 @@
             android:id="@+id/textView" android:layout_gravity="left|center_horizontal" android:layout_weight="0.03"
             android:text="Password" android:textSize="20dp"/>
     <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
             android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" android:layout_gravity="right" android:layout_weight="0.04">
-        <EditText
-                android:layout_width="wrap_content"
-                android:layout_height="50dp"
-                android:id="@+id/editText4" android:background="#ffffffff" android:layout_weight="1"
-                android:drawableLeft="@drawable/star3"/>
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true">
+
         <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Change"
-                android:id="@+id/button13" android:layout_weight="0.08"/>
+                android:onClick="onLock"
+                android:text="Passcode Settings"
+                android:textColor="#FFFFFF"/>
+
+        <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="onUnlock"
+                android:text="Remove Passcode"
+                android:textColor="#FFFFFF"/>
     </LinearLayout>
     <LinearLayout
             android:orientation="horizontal"
@@ -60,5 +67,10 @@
                 android:layout_height="wrap_content"
                 android:text="Edit"
                 android:id="@+id/button7" android:layout_weight="0.5"/>
+    </LinearLayout>
+    <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" android:layout_weight="0.04">
     </LinearLayout>
 </LinearLayout>
