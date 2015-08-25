@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.ContextThemeWrapper;
@@ -21,16 +22,18 @@ import java.util.Date;
  */
 public class Alarm extends Activity implements TimePickerDialog.OnTimeSetListener{
     private Button bt;
-    Switch sw,sw2,sw3,sw4,sw5;
-    Button bt2,bt3,bt4,bt5,bt6;
-    boolean sws,sws2,sws3,sws4,sws5;
-    boolean a,a2,a3,a4,a5;
+    Switch sw,sw2,sw3;
+    Button bt2,bt3,bt4;
+    boolean sws,sws2,sws3;
+    boolean a,a2,a3;
     int run;
     int notificationId;
     private PendingIntent alarmIntent;
+    SharedPreferences settingsActivity;
+    String test;
     private void check(Switch swC, int hour, int min){
         if (min<10){
-            swC.setText(hour+":"+"0"+min);
+
         }else{
             swC.setText(hour + ":" + min);
         }
@@ -41,17 +44,15 @@ public class Alarm extends Activity implements TimePickerDialog.OnTimeSetListene
         super.onCreate(savedInstanceState);
         setContentView(R.layout.set_alarm);
         setTitle("Alarm Setting");
+        settingsActivity = getPreferences(MODE_PRIVATE);
+        String mystring = settingsActivity.getString("mystring", "");
         bt = (Button) findViewById(R.id.button6);
         bt2 = (Button) findViewById(R.id.button8);
         bt3 = (Button) findViewById(R.id.button9);
         bt4 = (Button) findViewById(R.id.button10);
-        bt5 = (Button) findViewById(R.id.button11);
-        bt6 = (Button) findViewById(R.id.button12);
         sw = (Switch) findViewById(R.id.switch2);
         sw2 = (Switch) findViewById(R.id.switch3);
         sw3 = (Switch) findViewById(R.id.switch4);
-        sw4 = (Switch) findViewById(R.id.switch5);
-        sw5 = (Switch) findViewById(R.id.switch6);
         bt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -79,21 +80,7 @@ public class Alarm extends Activity implements TimePickerDialog.OnTimeSetListene
                 showTimePickerDialog(v);
             }
         });
-        bt5.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                run = bt5.getId();
-                showTimePickerDialog(v);
-            }
-        });
-        bt6.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                run = bt6.getId();
-                showTimePickerDialog(v);
-            }
-        });
-        Calendar setTimeCalendar = Calendar.getInstance();
+        sw.setText(mystring);
     }
     public void showTimePickerDialog(View v) {
         DialogFragment newFragment = new InAlarm();
@@ -102,18 +89,22 @@ public class Alarm extends Activity implements TimePickerDialog.OnTimeSetListene
     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
         if(run == 0) {
             if (sws == false){
-                check(sw, hourOfDay, minute);
+                Switch sw =(Switch)findViewById(R.id.switch2);
                 bt2.setVisibility(view.VISIBLE);
                 sw.setVisibility(view.VISIBLE);
                 sw.toggle();
                 sws = true;
                 a = true;
+                SharedPreferences.Editor editor = settingsActivity.edit();
+                editor.putString("mystring", Integer.toString(hourOfDay) + ":" + "0" + Integer.toString(minute));
+                //最後要提交commit
+                editor.commit();
                 Intent bootIntent = new Intent(Alarm.this, AlarmBroadcastReceiver.class);
                 bootIntent.putExtra("notificationId", notificationId);
                 alarmIntent = PendingIntent.getBroadcast(Alarm.this, 0, bootIntent, PendingIntent.FLAG_CANCEL_CURRENT);
                 AlarmManager alarm = (AlarmManager)getSystemService(Context.ALARM_SERVICE);
-
                 Calendar startTime = Calendar.getInstance();
+
                 startTime.set(Calendar.HOUR_OF_DAY, hourOfDay);
                 startTime.set(Calendar.MINUTE, minute);
                 startTime.set(Calendar.SECOND, 0);
@@ -123,6 +114,16 @@ public class Alarm extends Activity implements TimePickerDialog.OnTimeSetListene
                         alarmStartTime,
                         alarmIntent
                 );
+                sw.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                    @Override
+                    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                        if (isChecked){
+                        }else{
+                            AlarmManager am = (AlarmManager)getSystemService(ALARM_SERVICE);
+                            am.cancel(alarmIntent);
+                        }
+                    }
+                });
                 Toast.makeText(Alarm.this, "Alarm set!", Toast.LENGTH_SHORT).show();
                 notificationId++;
             }
@@ -141,22 +142,6 @@ public class Alarm extends Activity implements TimePickerDialog.OnTimeSetListene
                 sw3.toggle();
                 sws3 = true;
                 a3 = true;
-            }
-            else if (sws3 == true && sws4 == false){
-                check(sw4,hourOfDay,minute);
-                bt5.setVisibility(view.VISIBLE);
-                sw4.setVisibility(view.VISIBLE);
-                sw4.toggle();
-                sws4 = true;
-                a4 = true;
-            }
-            else if (sws4 == true && sws5 == false){
-                check(sw5,hourOfDay,minute);
-                bt6.setVisibility(view.VISIBLE);
-                sw5.setVisibility(view.VISIBLE);
-                sw5.toggle();
-                sws5 = true;
-                a5 = true;
                 bt.setEnabled(false);
             }
         }else{
@@ -170,14 +155,6 @@ public class Alarm extends Activity implements TimePickerDialog.OnTimeSetListene
             }
             else if (run == bt4.getId()) {
                 check(sw3,hourOfDay,minute);
-                run = 0;
-            }
-            else if (run == bt5.getId()){
-                check(sw4,hourOfDay,minute);
-                run = 0;
-            }
-            else if (run == bt6.getId()){
-                check(sw5,hourOfDay,minute);
                 run = 0;
             }
         }
