@@ -3,6 +3,9 @@
     <string name="app_name">my_daily_something</string>
 
 
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+
     <!-- For contentDescription of Image-based layout -->
     <string name="image_error">Image</string>
     <string name="cansel">Cancel</string>
@@ -26,7 +29,7 @@
     <string name="title_activity_sample2">Sample2Activity</string>
 
     <!-- SampleActivity -->
-    <string name="sample1">Passcode Setting</string>
+    <string name="sample1">SampleActivity1</string>
     <string name="sample2">SampleActivity2</string>
     <string name="sample11">SampleActivity11</string>
     <string name="sample22">SampleActivity22</string>

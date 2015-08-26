@@ -77,7 +77,7 @@ public class LockObserverApplication extends Application implements Application.
     public void onActivityDestroyed(Activity activity) {
     }
 
-    /* Determining whether the password-setting */
+    /* Determining whether the password-setting, Pete */
     protected boolean checkIsLocked() {
         return PrefUtil.getBool(getApplicationContext(), PREF_KEY_IS_LOCKED);
     }

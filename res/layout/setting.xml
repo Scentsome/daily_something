@@ -29,7 +29,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/textView" android:layout_gravity="left|center_horizontal" android:layout_weight="0.03"
-            android:text="Password" android:textSize="20dp"/>
+            android:text="Passcode" android:textSize="20dp"/>
     <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -41,16 +41,13 @@
         <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:onClick="onLock"
-                android:text="Passcode Settings"
-                android:textColor="#FFFFFF"/>
-
-        <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:onClick="onUnlock"
-                android:text="Remove Passcode"
-                android:textColor="#FFFFFF"/>
+                android:text="Settings"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
+                android:onClick="onSample1"
+                android:id="@+id/button8"
+                />
     </LinearLayout>
     <LinearLayout
             android:orientation="horizontal"
