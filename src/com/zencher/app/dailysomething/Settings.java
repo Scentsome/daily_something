@@ -1,8 +1,14 @@
 package com.zencher.app.dailysomething;
 
+import android.app.AlarmManager;
 import android.app.Fragment;
+import android.app.PendingIntent;
+import android.app.TimePickerDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -44,8 +50,6 @@ public class Settings extends Fragment implements TimePickerDialog.OnTimeSetList
             editor.commit();
         }
     }
-
-
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

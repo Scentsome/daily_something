@@ -7,6 +7,8 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
+import android.media.RingtoneManager;
+import android.net.Uri;
 import android.os.Build;
 
 /**
@@ -22,6 +24,11 @@ public class AlarmBroadcastReceiver extends BroadcastReceiver {
         NotificationManager myNotification = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
         Notification notification = prepareNotification();
         myNotification.notify(notificationProvisionalId, notification);
+        Uri uri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
+        notification.sound = uri;
+        long[] mVibreate= new long[]{1000,1000,1000,1000,1000};
+        notification.vibrate = mVibreate;
+
     }
     private Notification prepareNotification(){
         Intent bootIntent =
