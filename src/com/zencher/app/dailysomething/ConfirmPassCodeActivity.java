@@ -18,7 +18,7 @@ import com.zencher.app.dailysomething.util.PrefUtil;
 
 public class ConfirmPassCodeActivity extends Activity {
 
-    // Constant of text
+    // Constant of text, Pete
     private final String TEXT_MAIN_MISTAKE = "Passcode input";
     private final String TEXT_SUB_MISTAKE = "Passcode is incorrect";
     // Password verification variable

@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">my_daily_something</string>
+    <string name="app_name">My Journal</string>
 
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
 
     <!-- For contentDescription of Image-based layout -->
     <string name="image_error">Image</string>
@@ -22,11 +25,11 @@
     <string name="eight">8</string>
     <string name="nine">9</string>
     <string name="period">.</string>
-    <string name="title_activity_sample1">Sample1Activity</string>
+    <string name="title_activity_sample1">Locker</string>
     <string name="title_activity_sample2">Sample2Activity</string>
 
     <!-- SampleActivity -->
-    <string name="sample1">Passcode Setting</string>
+    <string name="sample1">SampleActivity1</string>
     <string name="sample2">SampleActivity2</string>
     <string name="sample11">SampleActivity11</string>
     <string name="sample22">SampleActivity22</string>

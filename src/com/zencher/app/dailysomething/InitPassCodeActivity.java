@@ -19,7 +19,7 @@ import com.zencher.app.dailysomething.util.ShowToast;
 
 public class InitPassCodeActivity extends Activity {
 
-    // Constant of text
+    // Constant of text, Pete
     private final String TEXT_MAIN_CONFIRM = "Passcode re-enter";
     private final String TEXT_SUB_CONFIRM = "Please enter again to confirm";
     private final String TEXT_MAIN_MISTAKE = "Passcode lock";
