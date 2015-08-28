@@ -25,7 +25,7 @@ public class AlarmBroadcastReceiver extends BroadcastReceiver {
     }
     private Notification prepareNotification(){
         Intent bootIntent =
-                new Intent(alarmReceiverContext, Alarm.class);
+                new Intent(alarmReceiverContext, MyActivity.class);
         PendingIntent contentIntent =
                 PendingIntent.getActivity(alarmReceiverContext, 0, bootIntent, 0);
         Notification.Builder builder = new Notification.Builder(

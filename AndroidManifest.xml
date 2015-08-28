@@ -20,8 +20,6 @@
                   android:parentActivityName="MyActivity"></activity>
         <activity android:name=".New_Diary"
                   android:parentActivityName="MyActivity"></activity>
-        <activity android:name=".Alarm"
-                  android:parentActivityName="MyActivity"></activity>
         <activity android:name=".Password"
                   android:parentActivityName="MyActivity"></activity>
         <receiver android:name=".AlarmBroadcastReceiver"></receiver>

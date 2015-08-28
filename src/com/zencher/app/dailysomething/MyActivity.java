@@ -51,4 +51,5 @@ public class MyActivity extends Activity {
     }
     public void doNegativeClick() {
     }
+
 }
