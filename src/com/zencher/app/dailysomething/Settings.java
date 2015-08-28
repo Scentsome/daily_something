@@ -26,14 +26,14 @@ public class Settings extends Fragment implements TimePickerDialog.OnTimeSetList
     private View v;
     private Button bt,bt2;
     private TextView tv;
-    private Switch sw;
-    private int savedHour,savedMin;
-    SharedPreferences settingsActivity;
+    Switch sw;
+    int savedHour,savedMin;
+    SharedPreferences settingsActivity,settingsActivity2,settingsActivity3;
     int notificationId;
     private PendingIntent alarmIntent;
-    private boolean swState;
+    boolean swex;
     public static final long DAY = 1000 * 60 * 60 * 24;
-    private void check(TextView tv, int hour, int min){
+     void check(TextView tv, int hour, int min){
         if (min<10){
             tv.setVisibility(View.VISIBLE);
             tv.setText(Integer.toString(hour) + ":" + "0" + Integer.toString(min));
@@ -59,29 +59,30 @@ public class Settings extends Fragment implements TimePickerDialog.OnTimeSetList
     }
 
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // TODO Auto-generated method stub
-        settingsActivity = this.getActivity().getSharedPreferences("pref", Context.MODE_PRIVATE);
-
+        settingsActivity = this.getActivity().getSharedPreferences("pref", Context.MODE_APPEND);
+        settingsActivity2 = this.getActivity().getSharedPreferences("pref2",Context.MODE_APPEND);
+        settingsActivity3 = this.getActivity().getSharedPreferences("pref3", Context.MODE_APPEND);
+        boolean getState = settingsActivity2.getBoolean("swSt",false);
         String mystring = settingsActivity.getString("mystring", "");
+        int timeSaver = settingsActivity3.getInt("timeS", 0);
+        int timeSaver2 = settingsActivity3.getInt("timeS2",0);
         v = inflater.inflate(R.layout.setting, container, false);
         bt = (Button) v.findViewById(R.id.button7);
         bt2 = (Button)v.findViewById(R.id.button13);
         tv = (TextView)v.findViewById(R.id.textView5);
         sw = (Switch)v.findViewById(R.id.switch1);
-        if (swState = sw.isChecked()){
-            sw.setChecked(true);
-        }else{
-            sw.setChecked(false);
-        }
+        sw.setChecked(getState);
+        swex = getState;
         tv.setText(mystring);
+        savedHour = timeSaver;
+        savedMin = timeSaver2;
         if (tv.getText() != null){
             tv.setVisibility(View.VISIBLE);
         }
-
         bt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -96,6 +97,11 @@ public class Settings extends Fragment implements TimePickerDialog.OnTimeSetList
                 editor.commit();
                 tv.setVisibility(View.GONE);
                 tv.setText(null);
+                sw.toggle();
+                SharedPreferences.Editor editor2 = settingsActivity2.edit();
+                editor2.putBoolean("swSt", sw.isChecked());
+                //程璶矗ユcommit
+                editor2.commit();
                 AlarmManager am = (AlarmManager) getActivity().getSystemService(Context.ALARM_SERVICE);
                 am.cancel(alarmIntent);
             }
@@ -105,9 +111,12 @@ public class Settings extends Fragment implements TimePickerDialog.OnTimeSetList
         sw.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                SharedPreferences.Editor editor2 = settingsActivity2.edit();
+                editor2.putBoolean("swSt", isChecked);
+                //程璶矗ユcommit
+                editor2.commit();
                 if (tv.getVisibility() == View.VISIBLE) {
                     if (isChecked) {
-                        swState = sw.isChecked();
                         Intent bootIntent = new Intent(getActivity(), AlarmBroadcastReceiver.class);
                         bootIntent.putExtra("notificationId", notificationId);
                         alarmIntent = PendingIntent.getBroadcast(getActivity(), 0, bootIntent, PendingIntent.FLAG_CANCEL_CURRENT);
@@ -135,7 +144,6 @@ public class Settings extends Fragment implements TimePickerDialog.OnTimeSetList
                         alarm.setRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP, firstTime, DAY, alarmIntent);
                         notificationId++;
                     } else {
-                        swState = sw.isChecked();
                         AlarmManager am = (AlarmManager) getActivity().getSystemService(Context.ALARM_SERVICE);
                         am.cancel(alarmIntent);
                         Toast.makeText(getActivity(), "Alarm Canceled", Toast.LENGTH_SHORT).show();
@@ -154,7 +162,10 @@ public class Settings extends Fragment implements TimePickerDialog.OnTimeSetList
     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
         if (sw.isChecked() != true){
             sw.toggle();
-            swState = sw.isChecked();
+            SharedPreferences.Editor editor2 = settingsActivity2.edit();
+            editor2.putBoolean("swSt", sw.isChecked());
+            //程璶矗ユcommit
+            editor2.commit();
         }
         check(tv, hourOfDay, minute);
         Intent bootIntent = new Intent(getActivity(), AlarmBroadcastReceiver.class);
@@ -172,6 +183,13 @@ public class Settings extends Fragment implements TimePickerDialog.OnTimeSetList
         startTime.set(Calendar.SECOND, 0);
         savedHour = hourOfDay;
         savedMin = minute;
+
+        SharedPreferences.Editor editor3 = settingsActivity3.edit();
+        editor3.putInt("timeSaver", hourOfDay);
+        editor3.putInt("timeSaver2",minute);
+        //程璶矗ユcommit
+        editor3.commit();
+
         long alarmStartTime = startTime.getTimeInMillis();
 
         if (systemTime > alarmStartTime) {
