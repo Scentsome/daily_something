@@ -19,12 +19,19 @@ import java.util.Calendar;
 import java.util.TimeZone;
 
 
+
+import android.widget.Button;
+
+import com.zencher.app.dailysomething.activity.Sample1Activity;
+import com.zencher.app.dailysomething.util.LogUtil;
+
 /**
  * Created by kevin on 2015/7/13.
  */
 public class Settings extends Fragment implements TimePickerDialog.OnTimeSetListener{
     private View v;
-    private Button bt,bt2;
+    private Button bt,bt2, lovekevin;
+
     private TextView tv;
     Switch sw;
     int savedHour,savedMin;
@@ -33,6 +40,7 @@ public class Settings extends Fragment implements TimePickerDialog.OnTimeSetList
     private PendingIntent alarmIntent;
     boolean swex;
     public static final long DAY = 1000 * 60 * 60 * 24;
+
      void check(TextView tv, int hour, int min){
         if (min<10){
             tv.setVisibility(View.VISIBLE);
@@ -51,11 +59,31 @@ public class Settings extends Fragment implements TimePickerDialog.OnTimeSetList
         }
     }
 
+
+
+    private static final String KEY_PASSWORD = "key_password";
+
+    public static Intent createIntent(Context context) {
+        Intent intent = new Intent(context, Settings.class);
+        return intent;
+    }
+
+    public static Intent createIntent(Context context, int password) {
+        Intent intent = new Intent(context, Settings.class);
+        intent.putExtra(KEY_PASSWORD, password);
+        return intent;
+    }
+
+
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         // TODO Auto-generated method stub
         super.onCreate(savedInstanceState);
 
+
+
+        LogUtil.d("onCreate");
     }
 
 
@@ -73,6 +101,9 @@ public class Settings extends Fragment implements TimePickerDialog.OnTimeSetList
         v = inflater.inflate(R.layout.setting, container, false);
         bt = (Button) v.findViewById(R.id.button7);
         bt2 = (Button)v.findViewById(R.id.button13);
+
+        lovekevin = (Button)v.findViewById(R.id.buttonlovekevin);
+
         tv = (TextView)v.findViewById(R.id.textView5);
         sw = (Switch)v.findViewById(R.id.switch1);
         sw.setChecked(getState);
@@ -106,6 +137,20 @@ public class Settings extends Fragment implements TimePickerDialog.OnTimeSetList
                 am.cancel(alarmIntent);
             }
         });
+
+
+
+        lovekevin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent();
+                intent.setClass(getActivity(), Sample1Activity.class);
+                startActivity(intent);
+            }
+        });
+
+
+
         getActivity().setTitle("Setting");
 
         sw.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -151,9 +196,6 @@ public class Settings extends Fragment implements TimePickerDialog.OnTimeSetList
                 }
             }
         });
-
-
-
         return v;
     }
 
