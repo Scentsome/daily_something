@@ -25,9 +25,7 @@ public class AlarmBroadcastReceiver extends BroadcastReceiver {
         Notification notification = prepareNotification();
         myNotification.notify(notificationProvisionalId, notification);
         Uri uri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
-        notification.sound = uri;
-        long[] mVibreate= new long[]{1000,1000,1000,1000,1000};
-        notification.vibrate = mVibreate;
+
 
     }
     private Notification prepareNotification(){
@@ -37,13 +35,15 @@ public class AlarmBroadcastReceiver extends BroadcastReceiver {
                 PendingIntent.getActivity(alarmReceiverContext, 0, bootIntent, 0);
         Notification.Builder builder = new Notification.Builder(
                 alarmReceiverContext);
+        long[] mVibreate= new long[]{1000,1000,1000,1000,1000};
         builder.setSmallIcon(android.R.drawable.ic_dialog_info)
                 .setTicker("Time to Write Something!")
                 .setContentTitle("HEY!")
                 .setWhen(System.currentTimeMillis())
                 .setAutoCancel(true)
                 .setDefaults(Notification.DEFAULT_SOUND)
-                .setContentIntent(contentIntent);
+                .setContentIntent(contentIntent)
+                .setVibrate(mVibreate);
         Notification.BigPictureStyle pictureStyle =
                 new Notification.BigPictureStyle(builder);
         pictureStyle.bigPicture(BitmapFactory.decodeResource(alarmReceiverContext.getResources(), R.drawable.cat));
