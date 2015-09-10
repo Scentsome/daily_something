@@ -128,7 +128,9 @@ public class Settings extends Fragment implements TimePickerDialog.OnTimeSetList
                 editor.commit();
                 tv.setVisibility(View.GONE);
                 tv.setText(null);
-                sw.toggle();
+                if(sw.isChecked()){
+                    sw.toggle();
+                }
                 SharedPreferences.Editor editor2 = settingsActivity2.edit();
                 editor2.putBoolean("swSt", sw.isChecked());
                 //最後要提交commit
